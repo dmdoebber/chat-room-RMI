@@ -14,4 +14,5 @@ public interface IRoomChat extends java.rmi.Remote {
     public void joinRoom(String usrName);
     public void leaveRoom(String usrName);
     public void closeRoom();
+    public String getRoomName();
 }

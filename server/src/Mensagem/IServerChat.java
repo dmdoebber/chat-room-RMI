@@ -5,11 +5,16 @@
  */
 package Mensagem;
 
+import Server.RoomChat;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.List;
+
 /**
  *
  * @author daniel
  */
-public interface IServerChat extends java.rmi.Remote {
-    //public roomList getRooms();
-    public void criateRoom(String roomName);
+public interface IServerChat extends Remote {
+    public void criateRoom(String roomName) throws RemoteException;
+    public List<RoomChat> getRooms() throws RemoteException;
 }

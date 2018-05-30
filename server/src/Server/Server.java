@@ -6,29 +6,59 @@
 package Server;
 
 import Mensagem.IServerChat;
+import java.rmi.AlreadyBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author daniel
  */
 public class Server extends UnicastRemoteObject implements IServerChat{
-    private Registry roomList;
+    private Registry registry;
+    private List<RoomChat> roomList;  
+    private view v;
     
-    public Server() throws Exception{
-        super();
-        roomList = LocateRegistry.createRegistry(6969);
+    public Server() throws RemoteException{
+        try{
+            registry = LocateRegistry.createRegistry(2020);
+            roomList = new ArrayList<>();
+        
+            v = new view();
+            v.setServer(this);
+            v.setVisible(true);
+            
+        }catch(Exception e){
+            System.out.println("Erro "+ e);
+        } 
     }
     
     @Override
-    public void criateRoom(String roomName) {
+    public void criateRoom(String nomeSala) {
         RoomChat room;
-        
-        room = new RoomChat();
-        
+        try {  
+            
+            room = new RoomChat(nomeSala, this);
+            this.registry.bind(nomeSala, room);
+            
+            roomList.add(room);
+            v.list.addElement(nomeSala);
+        } catch (RemoteException | AlreadyBoundException ex) {
+            System.out.println("Erro "+ ex);
+        }    
+    }
+
+    @Override
+    public List<RoomChat> getRooms() {
+        return roomList;
+    }
+    
+    public static void main(String[] args) throws RemoteException{
+        Server server = new Server();
     }
     
 }
