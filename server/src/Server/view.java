@@ -11,12 +11,11 @@ import javax.swing.DefaultListModel;
  *
  * @author daniel
  */
+
 public class view extends javax.swing.JFrame {
 
     private Server server;
     public DefaultListModel<String> list;
-    
-    
     
     public view() {
         initComponents(); 
@@ -27,8 +26,7 @@ public class view extends javax.swing.JFrame {
     
     public void setServer(Server server){
         this.server = server;
-    }
-    
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
