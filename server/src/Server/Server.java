@@ -12,15 +12,15 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author daniel
  */
 public class Server extends UnicastRemoteObject implements IServerChat{
+    private ArrayList<RoomChat> roomList;  
+    
     private Registry registry;
-    private List<RoomChat> roomList;  
     private view v;
     
     public Server() throws RemoteException{
@@ -53,7 +53,7 @@ public class Server extends UnicastRemoteObject implements IServerChat{
     }
 
     @Override
-    public List<RoomChat> getRooms() {
+    public ArrayList<RoomChat> getRooms() {
         return roomList;
     }
     

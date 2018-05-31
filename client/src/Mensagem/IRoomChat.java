@@ -5,13 +5,16 @@
  */
 package Mensagem;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author daniel
  */
 public interface IRoomChat extends java.rmi.Remote {
-    public void sendMsg(String usrName, String msg);
-    public void joinRoom(String usrName);
-    public void leaveRoom(String usrName);
-    public void closeRoom();
+    public void sendMsg(String usrName, String msg) throws RemoteException;
+    public void joinRoom(String usrName) throws RemoteException;
+    public void leaveRoom(String usrName) throws RemoteException;
+    public void closeRoom() throws RemoteException;
+    public String getRoomName() throws RemoteException;
 }
