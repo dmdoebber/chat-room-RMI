@@ -41,10 +41,7 @@ public class RoomChat implements IRoomChat{
     public void leaveRoom(String usrName) {
         userList.remove(usrName);
         
-        Iterator i = userList.entrySet().iterator();
-        while(i.hasNext()){
-            Map.Entry m = (Map.Entry) i.next();
-            
+        for (Map.Entry m : userList.entrySet()) {
             String user = (String) m.getKey();
             IUserChat iUser = (IUserChat) m.getValue();
             
@@ -54,10 +51,7 @@ public class RoomChat implements IRoomChat{
 
     @Override
     public void closeRoom() {
-        Iterator i = userList.entrySet().iterator();
-        while(i.hasNext()){
-            Map.Entry m = (Map.Entry) i.next();
-            
+        for (Map.Entry m : userList.entrySet()) {
             String user = (String) m.getValue();
             IUserChat iUser = (IUserChat) m.getValue();
             

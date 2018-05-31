@@ -5,8 +5,9 @@
  */
 package view;
 
-import Mensagem.IRoomChat;
 import Mensagem.IServerChat;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -17,11 +18,12 @@ import java.rmi.registry.Registry;
 public class Client{
     private Registry registry;
     private IServerChat server;
-    private IRoomChat room;
+    
     private viewList vList;
-    private String IP = "localhost";
+    private String IP;
     
     public Client(){
+        this.IP = "127.0.0.1";
        
         try{            
             registry = LocateRegistry.getRegistry(IP, 2020);
@@ -31,7 +33,7 @@ public class Client{
             vList = new viewList(server);
             vList.setVisible(true);
             
-        }catch(Exception e){
+        }catch(RemoteException | NotBoundException e){
             System.out.println("Erro " + e);
         }
         

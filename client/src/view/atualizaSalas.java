@@ -5,9 +5,11 @@
  */
 package view;
 
+import Mensagem.IRoomChat;
 import Mensagem.IServerChat;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.DefaultListModel;
 
 /**
@@ -27,7 +29,7 @@ public class atualizaSalas extends Thread{
     
     @Override
     public void run(){
-        ArrayList<String> lista;
+        HashMap<String, IRoomChat> lista;
         int oldSize = 0;
         
         while(true){
@@ -39,9 +41,8 @@ public class atualizaSalas extends Thread{
                     
                     list.removeAllElements();
                     
-                    for(int i = 0; i < oldSize; i++)
-                        list.addElement(lista.get(i));
-                    
+                    for (Map.Entry m : lista.entrySet()) 
+                        list.addElement((String) m.getKey());
                 }
                 
             } catch (RemoteException ex) {

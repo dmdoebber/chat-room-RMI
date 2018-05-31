@@ -5,18 +5,15 @@ package Mensagem;
  * and open the template in the editor.
  */
 
-
-
-import Server.RoomChat;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
  * @author daniel
  */
 public interface IServerChat extends Remote {
-    public void criateRoom(String roomName) throws RemoteException;
-    public ArrayList<RoomChat> getRooms() throws RemoteException;
+    public void createRoom(String roomName) throws RemoteException;
+    public HashMap<String, IRoomChat> getRooms() throws RemoteException;
 }

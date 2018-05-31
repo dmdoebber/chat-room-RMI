@@ -5,11 +5,10 @@
  */
 package view;
 
+import Mensagem.IRoomChat;
 import Mensagem.IServerChat;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
 import javax.swing.DefaultListModel;
 
 /**
@@ -21,6 +20,7 @@ public class viewList extends javax.swing.JFrame {
 
     private DefaultListModel<String> list;
     private IServerChat server;
+    
     private atualizaSalas attSalas;
     
     public viewList(IServerChat server) {
@@ -148,29 +148,25 @@ public class viewList extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         sala room;
-        ArrayList<String>  ls;
+        HashMap<String, IRoomChat>  roomList;
         String nSala = nomeSala.getText();
         String nUser = userName.getText();
         
         try {
             if(!nSala.equals("") && !nUser.equals("")){
-
-                ls = server.getRooms();
+                roomList = server.getRooms();
                 
-                if(ls.contains(nSala)){
-                    room = new sala();
-                    
-                }
+                if(!roomList.containsKey(nSala))                                  
+                    server.createRoom(nSala);
                 
-            
-            
+                IRoomChat r = (IRoomChat) roomList.get(nSala);
+                
+                room = new sala(nUser, r);
+                room.setVisible(true);
             }
         } catch (RemoteException ex) {
             System.out.println("Erro " + ex);
-        }
-        
-        
-        
+        }     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
