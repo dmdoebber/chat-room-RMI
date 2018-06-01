@@ -11,6 +11,7 @@ import Mensagem.IRoomChat;
 import Mensagem.IUserChat;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,12 +20,12 @@ import java.util.Map;
  *
  * @author daniel
  */
-public class RoomChat implements IRoomChat{
+public class RoomChat extends UnicastRemoteObject implements IRoomChat{
     private String nomeSala;
     private Map<String, IUserChat> userList;
     private Server server;
     
-    public RoomChat(String nomeSala, Server server){
+    public RoomChat(String nomeSala, Server server) throws RemoteException{
         this.nomeSala = nomeSala;
         this.userList = new HashMap<>() ;
         this.server = server;
@@ -43,6 +44,7 @@ public class RoomChat implements IRoomChat{
     @Override
     public void joinRoom(String usrName, IUserChat user) {
         userList.put(usrName, user);
+        
     }
 
     @Override
@@ -73,7 +75,6 @@ public class RoomChat implements IRoomChat{
         } catch (NotBoundException ex) {
             System.out.println("Erro " + ex);
         }
-        
     }
 
     @Override

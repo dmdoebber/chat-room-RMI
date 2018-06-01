@@ -6,16 +6,18 @@
 package view;
 
 import Mensagem.IUserChat;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 /**
  *
  * @author daniel
  */
-public class UserChat implements IUserChat{
+public class UserChat extends UnicastRemoteObject implements IUserChat{
     
     private sala vSala;
     
-    public UserChat(sala vSala){
+    public UserChat(sala vSala) throws RemoteException{
         this.vSala = vSala;
     }
 

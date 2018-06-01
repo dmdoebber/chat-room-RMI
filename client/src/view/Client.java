@@ -27,20 +27,16 @@ public class Client{
         
         try{                        
             registry = LocateRegistry.getRegistry(IP, 2020);
-            
             server = (IServerChat) registry.lookup("Servidor");
             
             vList = new viewList(server);
-            vList.setVisible(true);
-            
+            vList.setVisible(true);   
         }catch(RemoteException | NotBoundException e){
             System.out.println("Erro " + e);
         }
-        
     }
     
     public static void main (String[] args){
         Client c = new Client();
     }
-    
 }

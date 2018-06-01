@@ -13,29 +13,25 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author daniel
  */
 public class Server extends UnicastRemoteObject implements IServerChat{
-    private HashMap<String, IRoomChat> roomList;  
     
-    public Registry registry;
+    private HashMap<String, IRoomChat> roomList;  
+    public  Registry registry;
     private view v;
     
     public Server() throws RemoteException{
+        super();
         try{
-            registry = LocateRegistry.createRegistry(2020);
-            registry.bind("Servidor", this);
-            roomList = new HashMap<>();
+            registry = LocateRegistry.getRegistry(2020);
+            roomList = new HashMap();
         
-            v = new view();
-            v.setServer(this);
+            v = new view(this);
             v.setVisible(true);
             
         }catch(Exception e){
@@ -44,16 +40,12 @@ public class Server extends UnicastRemoteObject implements IServerChat{
     }
     
     @Override
-    public void createRoom(String nomeSala) throws RemoteException {
-        
+    public void createRoom(String nomeSala) throws RemoteException {        
         try {
             
             RoomChat room = new RoomChat(nomeSala, this);
-            registry.bind(nomeSala, room);
-            
-            System.out.println(Arrays.toString(registry.list()));
-            
-            roomList.put(nomeSala, room);  
+            this.registry.bind(nomeSala, room);                        
+            roomList.put(nomeSala, room);
             
         } catch (AlreadyBoundException | AccessException ex) {
             System.out.println("Erro " + ex);
@@ -65,8 +57,10 @@ public class Server extends UnicastRemoteObject implements IServerChat{
         return roomList;
     }
     
-    public static void main(String[] args) throws RemoteException{
+    public static void main(String[] args) throws RemoteException, AlreadyBoundException{
         Server server = new Server();
+        System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+        Registry registry = LocateRegistry.createRegistry(2020);
+        registry.rebind("Servidor", server);
     }
-    
 }

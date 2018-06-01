@@ -18,16 +18,16 @@ public class view extends javax.swing.JFrame {
     private Server server;
     public DefaultListModel<String> list;
     
-    public view() {
+    public view(Server server) {
         initComponents(); 
+        
+        this.server = server;
         
         list = new DefaultListModel<>();
         listaSalas.setModel(list);
     }
     
-    public void setServer(Server server){
-        this.server = server;
-    }    
+  
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
