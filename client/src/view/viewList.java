@@ -152,12 +152,13 @@ public class viewList extends javax.swing.JFrame {
                 
                 IRoomChat r = (IRoomChat) roomList.get(nSala);
                 
-                sala room = new sala(nUser, r);
+                sala room = new sala(nUser, r, this);
                 
                 UserChat uChat = new UserChat(nUser, room);
                 r.joinRoom(nUser, uChat);
                 
                 room.setVisible(true);
+                this.setVisible(false);
             }
         } catch (RemoteException ex) {
             System.out.println("Erro " + ex);

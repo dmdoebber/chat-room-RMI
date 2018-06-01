@@ -68,6 +68,7 @@ public class RoomChat extends UnicastRemoteObject implements IRoomChat{
             IUserChat iUser = (IUserChat) m.getValue();
             iUser.deliverMsg("", "Sala fechada pelo servidor!");
         }
+        userList.clear();
         try {
             server.registry.unbind(nomeSala);
             server.getRooms().remove(nomeSala);

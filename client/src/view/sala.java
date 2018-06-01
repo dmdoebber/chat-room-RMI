@@ -17,12 +17,14 @@ public class sala extends javax.swing.JFrame {
     
     private final String userName;
     private IRoomChat roomChat;
+    private viewList vList;
     
-    public sala(String userName, IRoomChat roomChat) throws RemoteException {
+    public sala(String userName, IRoomChat roomChat, viewList vList) throws RemoteException {
         initComponents();
         
         this.userName = userName;
         this.roomChat = roomChat;
+        this.vList = vList;
         
         this.nome.setText("Nome: " + userName);
         this.setTitle(roomChat.getRoomName());
@@ -151,7 +153,8 @@ public class sala extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             System.out.println("Erro " + ex);
         }
-        this.toBack();
+        this.dispose();
+        vList.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
