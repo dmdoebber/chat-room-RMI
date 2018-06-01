@@ -127,8 +127,16 @@ public class view extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         String nomeSala = nome.getText();
-        if(!nomeSala.equals("") && !list.contains(nomeSala))
-            server.createRoom(nomeSala);
+        try {
+            
+            if(!nomeSala.equals("") && !list.contains(nomeSala)){
+                server.createRoom(nomeSala);
+                list.addElement(nomeSala); 
+            }
+        
+        } catch (RemoteException ex) {
+            System.out.println("Erro" + ex);
+        }
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -139,7 +147,7 @@ public class view extends javax.swing.JFrame {
                 String nomeSala = listaSalas.getSelectedValue();            
                 server.getRooms().get(nomeSala).closeRoom();
                 list.removeElement(nomeSala);
-            } catch (RemoteException ex) {
+            } catch (Exception ex) {
                 System.out.println("Erro " + ex);
             }
         }

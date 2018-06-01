@@ -7,8 +7,6 @@ package view;
 
 import Mensagem.IRoomChat;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,6 +27,9 @@ public class sala extends javax.swing.JFrame {
         this.setTitle(roomChat.getRoomName());
         
     }
+    public void deliverMsg(String senderName, String msg){
+        textoSala.append("["+senderName+"]: "+msg);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -36,7 +37,7 @@ public class sala extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textoSala = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
@@ -48,10 +49,10 @@ public class sala extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        textoSala.setEditable(false);
+        textoSala.setColumns(20);
+        textoSala.setRows(5);
+        jScrollPane1.setViewportView(textoSala);
 
         jScrollPane2.setViewportView(jList1);
 
@@ -158,8 +159,8 @@ public class sala extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel nome;
+    private javax.swing.JTextArea textoSala;
     private javax.swing.JTextField txt;
     // End of variables declaration//GEN-END:variables
 }

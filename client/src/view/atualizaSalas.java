@@ -7,7 +7,9 @@ package view;
 
 import Mensagem.IRoomChat;
 import Mensagem.IServerChat;
+import Mensagem.IUserChat;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultListModel;

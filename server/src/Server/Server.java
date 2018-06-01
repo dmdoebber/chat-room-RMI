@@ -7,13 +7,16 @@ package Server;
 
 import Mensagem.IRoomChat;
 import Mensagem.IServerChat;
+import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,13 +25,13 @@ import java.util.HashMap;
 public class Server extends UnicastRemoteObject implements IServerChat{
     private HashMap<String, IRoomChat> roomList;  
     
-    private Registry registry;
+    public Registry registry;
     private view v;
     
     public Server() throws RemoteException{
         try{
             registry = LocateRegistry.createRegistry(2020);
-            registry.rebind("Servidor", this);
+            registry.bind("Servidor", this);
             roomList = new HashMap<>();
         
             v = new view();
@@ -41,18 +44,20 @@ public class Server extends UnicastRemoteObject implements IServerChat{
     }
     
     @Override
-    public void createRoom(String nomeSala) {
-        RoomChat room;
-        try {  
+    public void createRoom(String nomeSala) throws RemoteException {
+        
+        try {
             
-            room = new RoomChat(nomeSala, this);
-            this.registry.bind(nomeSala, room);
+            RoomChat room = new RoomChat(nomeSala, this);
+            registry.bind(nomeSala, room);
             
-            roomList.put(nomeSala, room);
-            v.list.addElement(nomeSala);
-        } catch (RemoteException | AlreadyBoundException ex) {
-            System.out.println("Erro "+ ex);
-        }    
+            System.out.println(Arrays.toString(registry.list()));
+            
+            roomList.put(nomeSala, room);  
+            
+        } catch (AlreadyBoundException | AccessException ex) {
+            System.out.println("Erro " + ex);
+        }     
     }
 
     @Override

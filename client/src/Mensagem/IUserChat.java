@@ -5,13 +5,11 @@
  */
 package Mensagem;
 
-import java.rmi.RemoteException;
-
 /**
  *
  * @author daniel
  */
 
 public interface IUserChat extends java.rmi.Remote {
-    public void deliverMsg(String senderName, String msg) throws RemoteException;
+    public void deliverMsg(String senderName, String msg);
 }
