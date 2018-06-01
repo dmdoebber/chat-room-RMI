@@ -31,31 +31,34 @@ public class RoomChat extends UnicastRemoteObject implements IRoomChat{
         this.server = server;
     }
     @Override
-    public void sendMsg(String usrName, String msg) {
+    public void sendMsg(String usrName, String msg) throws RemoteException {
 
         for (Map.Entry m : userList.entrySet()) {            
-            String user = (String) m.getKey();
             IUserChat iUser = (IUserChat) m.getValue();
-            
-            iUser.deliverMsg(user, msg);
+            iUser.deliverMsg(usrName, msg);
         }
     }
 
     @Override
-    public void joinRoom(String usrName, IUserChat user) {
+    public void joinRoom(String usrName, IUserChat user) throws RemoteException {
         userList.put(usrName, user);
+        
+        for (Map.Entry m : userList.entrySet()) {
+            IUserChat iUser = (IUserChat) m.getValue();
+            
+            iUser.deliverMsg(usrName, usrName+" entrou na sala!");
+        }
         
     }
 
     @Override
-    public void leaveRoom(String usrName) {
+    public void leaveRoom(String usrName) throws RemoteException {
         userList.remove(usrName);
         
         for (Map.Entry m : userList.entrySet()) {
-            String user = (String) m.getKey();
             IUserChat iUser = (IUserChat) m.getValue();
             
-            iUser.deliverMsg(user, usrName+" saiu da sala");
+            iUser.deliverMsg(usrName, usrName+" saiu da sala");
         }
     }
 

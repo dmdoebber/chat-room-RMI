@@ -45,15 +45,12 @@ public class view extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        listaSalas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "sala1" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         listaSalas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(listaSalas);
 
         jLabel1.setText("Nome:");
+
+        nome.setText("sala");
 
         jButton2.setText("Criar Sala");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -129,10 +126,8 @@ public class view extends javax.swing.JFrame {
         String nomeSala = nome.getText();
         try {
             
-            if(!nomeSala.equals("") && !list.contains(nomeSala)){
+            if(!nomeSala.equals("") && !list.contains(nomeSala))
                 server.createRoom(nomeSala);
-                list.addElement(nomeSala); 
-            }
         
         } catch (RemoteException ex) {
             System.out.println("Erro" + ex);

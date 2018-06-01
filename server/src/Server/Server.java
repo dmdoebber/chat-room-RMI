@@ -46,6 +46,7 @@ public class Server extends UnicastRemoteObject implements IServerChat{
             RoomChat room = new RoomChat(nomeSala, this);
             this.registry.bind(nomeSala, room);                        
             roomList.put(nomeSala, room);
+            v.list.addElement(nomeSala);
             
         } catch (AlreadyBoundException | AccessException ex) {
             System.out.println("Erro " + ex);

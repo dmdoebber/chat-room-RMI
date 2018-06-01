@@ -20,7 +20,6 @@ public class viewList extends javax.swing.JFrame {
 
     private DefaultListModel<String> list;
     private IServerChat server;
-    
     private atualizaSalas attSalas;
     
     public viewList(IServerChat server) {
@@ -52,11 +51,6 @@ public class viewList extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        listaSalas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "sala 1" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         listaSalas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 listaSalasMouseClicked(evt);
@@ -157,8 +151,9 @@ public class viewList extends javax.swing.JFrame {
                 IRoomChat r = (IRoomChat) roomList.get(nSala);
                 
                 sala room = new sala(nUser, r);
+                UserChat uChat = new UserChat(nUser, room);
+                r.joinRoom(nUser, uChat);
                 
-                //r.joinRoom(nSala, );
                 room.setVisible(true);
             }
         } catch (RemoteException ex) {

@@ -24,11 +24,11 @@ public class sala extends javax.swing.JFrame {
         this.roomChat = roomChat;
         
         this.nome.setText("Nome: " + userName);
-        this.setTitle(roomChat.getRoomName());
+        //this.setTitle(roomChat.getRoomName());
         
     }
     public void deliverMsg(String senderName, String msg){
-        textoSala.append("["+senderName+"]: "+msg);
+        textoSala.append("["+senderName+"]: "+msg+"\n");
     }
 
     @SuppressWarnings("unchecked")

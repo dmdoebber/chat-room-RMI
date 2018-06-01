@@ -13,12 +13,13 @@ import java.rmi.server.UnicastRemoteObject;
  *
  * @author daniel
  */
-public class UserChat extends UnicastRemoteObject implements IUserChat{
-    
+public class UserChat extends UnicastRemoteObject implements IUserChat {
+    private String nome;
     private sala vSala;
     
-    public UserChat(sala vSala) throws RemoteException{
-        this.vSala = vSala;
+    public UserChat(String nome, sala vSala) throws RemoteException{
+        this.nome = nome;
+        this.vSala = vSala;       
     }
 
     @Override
