@@ -7,6 +7,7 @@ package view;
 
 import Mensagem.IRoomChat;
 import java.rmi.RemoteException;
+import javax.swing.JFrame;
 
 /**
  *
@@ -24,8 +25,9 @@ public class sala extends javax.swing.JFrame {
         this.roomChat = roomChat;
         
         this.nome.setText("Nome: " + userName);
-        //this.setTitle(roomChat.getRoomName());
+        this.setTitle(roomChat.getRoomName());
         
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     public void deliverMsg(String senderName, String msg){
         textoSala.append("["+senderName+"]: "+msg+"\n");
@@ -149,6 +151,7 @@ public class sala extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             System.out.println("Erro " + ex);
         }
+        this.toBack();
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

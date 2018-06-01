@@ -143,14 +143,17 @@ public class viewList extends javax.swing.JFrame {
         
         try {
             if(!nSala.equals("") && !nUser.equals("")){
-                roomList = server.getRooms();
+                roomList = server.getRooms();                
                 
-                if(!roomList.containsKey(nSala))                                  
+                if(!roomList.containsKey(nSala)){
                     server.createRoom(nSala);
+                    roomList = server.getRooms();
+                }                                  
                 
                 IRoomChat r = (IRoomChat) roomList.get(nSala);
                 
                 sala room = new sala(nUser, r);
+                
                 UserChat uChat = new UserChat(nUser, room);
                 r.joinRoom(nUser, uChat);
                 
@@ -158,7 +161,7 @@ public class viewList extends javax.swing.JFrame {
             }
         } catch (RemoteException ex) {
             System.out.println("Erro " + ex);
-        }   
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

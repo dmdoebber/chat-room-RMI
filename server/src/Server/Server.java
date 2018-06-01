@@ -13,6 +13,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -44,7 +45,10 @@ public class Server extends UnicastRemoteObject implements IServerChat{
         try {
             
             RoomChat room = new RoomChat(nomeSala, this);
-            this.registry.bind(nomeSala, room);                        
+            this.registry.bind(nomeSala, room);
+            
+            System.out.println(Arrays.toString(registry.list()));
+            
             roomList.put(nomeSala, room);
             v.list.addElement(nomeSala);
             

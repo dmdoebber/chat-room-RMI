@@ -46,7 +46,7 @@ public class RoomChat extends UnicastRemoteObject implements IRoomChat{
         for (Map.Entry m : userList.entrySet()) {
             IUserChat iUser = (IUserChat) m.getValue();
             
-            iUser.deliverMsg(usrName, usrName+" entrou na sala!");
+            iUser.deliverMsg(usrName, " entrou na sala!");
         }
         
     }
@@ -58,23 +58,19 @@ public class RoomChat extends UnicastRemoteObject implements IRoomChat{
         for (Map.Entry m : userList.entrySet()) {
             IUserChat iUser = (IUserChat) m.getValue();
             
-            iUser.deliverMsg(usrName, usrName+" saiu da sala");
+            iUser.deliverMsg(usrName," saiu da sala");
         }
     }
 
     @Override
     public void closeRoom() throws RemoteException{
+        for (Map.Entry m : userList.entrySet()) {
+            IUserChat iUser = (IUserChat) m.getValue();
+            iUser.deliverMsg("", "Sala fechada pelo servidor!");
+        }
         try {
-            
-             server.registry.unbind(nomeSala);
-             server.getRooms().remove(nomeSala);
-            
-             for (Map.Entry m : userList.entrySet()) {
-                String user = (String) m.getValue();
-                IUserChat iUser = (IUserChat) m.getValue();
-            
-                iUser.deliverMsg(user, "Sala fechada pelo servidor!");
-            }
+            server.registry.unbind(nomeSala);
+            server.getRooms().remove(nomeSala);
         } catch (NotBoundException ex) {
             System.out.println("Erro " + ex);
         }

@@ -23,8 +23,7 @@ public class Client{
     private String IP;
     
     public Client(){
-        this.IP = "127.0.0.1";       
-        
+        this.IP = "127.0.0.1";               
         try{                        
             registry = LocateRegistry.getRegistry(IP, 2020);
             server = (IServerChat) registry.lookup("Servidor");
