@@ -5,7 +5,10 @@
  */
 package Server;
 
+import Mensagem.IRoomChat;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import javax.swing.DefaultListModel;
 
 /**
@@ -16,19 +19,20 @@ import javax.swing.DefaultListModel;
 public class view extends javax.swing.JFrame {
 
     private Server server;
+    private Registry registry;
+    
     public DefaultListModel<String> list;
     
-    public view(Server server) {
+    public view(Server server, Registry registry) {
         initComponents(); 
         
         this.server = server;
+        this.registry = registry;
         
         list = new DefaultListModel<>();
         listaSalas.setModel(list);
     }
     
-  
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -139,10 +143,13 @@ public class view extends javax.swing.JFrame {
         
         if(listaSalas.getSelectedIndex() != -1){
             try {
-                String nomeSala = listaSalas.getSelectedValue();            
-                server.getRooms().get(nomeSala).closeRoom();
+                
+                String nomeSala = listaSalas.getSelectedValue();  
+                IRoomChat room = (IRoomChat) registry.lookup(nomeSala);
+                room.closeRoom();
                 list.removeElement(nomeSala);
-            } catch (Exception ex) {
+                
+            } catch (RemoteException | NotBoundException ex) {
                 System.out.println("Erro " + ex);
             }
         }

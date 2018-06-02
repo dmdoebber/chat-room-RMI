@@ -7,8 +7,10 @@ package view;
 
 import Mensagem.IRoomChat;
 import Mensagem.IServerChat;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.HashMap;
+import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 /**
@@ -21,11 +23,13 @@ public class viewList extends javax.swing.JFrame {
     private DefaultListModel<String> list;
     private IServerChat server;
     private atualizaSalas attSalas;
+    private Registry registry;
     
-    public viewList(IServerChat server) {
+    public viewList(IServerChat server, Registry registry) {
         initComponents();
         
         this.server = server;
+        this.registry = registry;
 
         list = new DefaultListModel<>();
         listaSalas.setModel(list);
@@ -136,7 +140,7 @@ public class viewList extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        HashMap<String, IRoomChat>  roomList;
+        ArrayList<String>  roomList;
         
         String nSala = nomeSala.getText();
         String nUser = userName.getText();
@@ -145,22 +149,22 @@ public class viewList extends javax.swing.JFrame {
             if(!nSala.equals("") && !nUser.equals("")){
                 roomList = server.getRooms();                
                 
-                if(!roomList.containsKey(nSala)){
+                if(!roomList.contains(nSala)){
                     server.createRoom(nSala);
                     roomList = server.getRooms();
                 }                                  
                 
-                IRoomChat r = (IRoomChat) roomList.get(nSala);
+                IRoomChat r = (IRoomChat) registry.lookup(nSala);
                 
                 sala room = new sala(nUser, r, this);
                 
-                UserChat uChat = new UserChat(nUser, room);
+                UserChat uChat = new UserChat(room);
                 r.joinRoom(nUser, uChat);
                 
                 room.setVisible(true);
                 this.setVisible(false);
             }
-        } catch (RemoteException ex) {
+        } catch (RemoteException | NotBoundException ex) {
             System.out.println("Erro " + ex);
         }
         

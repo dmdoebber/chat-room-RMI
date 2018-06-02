@@ -5,7 +5,6 @@
  */
 package Server;
 
-import Mensagem.IRoomChat;
 import Mensagem.IServerChat;
 import java.rmi.AccessException;
 import java.rmi.AlreadyBoundException;
@@ -13,8 +12,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  *
@@ -22,7 +21,7 @@ import java.util.HashMap;
  */
 public class Server extends UnicastRemoteObject implements IServerChat{
     
-    private HashMap<String, IRoomChat> roomList;  
+    private ArrayList<String> roomList;  
     public  Registry registry;
     private view v;
     
@@ -30,9 +29,9 @@ public class Server extends UnicastRemoteObject implements IServerChat{
         super();
         try{
             registry = LocateRegistry.getRegistry(2020);
-            roomList = new HashMap();
+            roomList = new ArrayList();
         
-            v = new view(this);
+            v = new view(this, registry);
             v.setVisible(true);
             
         }catch(Exception e){
@@ -49,7 +48,7 @@ public class Server extends UnicastRemoteObject implements IServerChat{
             
             System.out.println(Arrays.toString(registry.list()));
             
-            roomList.put(nomeSala, room);
+            roomList.add(nomeSala);
             v.list.addElement(nomeSala);
             
         } catch (AlreadyBoundException | AccessException ex) {
@@ -58,7 +57,7 @@ public class Server extends UnicastRemoteObject implements IServerChat{
     }
 
     @Override
-    public HashMap<String, IRoomChat> getRooms() {
+    public ArrayList<String> getRooms() {
         return roomList;
     }
     

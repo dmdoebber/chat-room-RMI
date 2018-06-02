@@ -5,11 +5,9 @@
  */
 package view;
 
-import Mensagem.IRoomChat;
 import Mensagem.IServerChat;
 import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 /**
@@ -29,31 +27,33 @@ public class atualizaSalas extends Thread{
     
     @Override
     public void run(){
-        HashMap<String, IRoomChat> lista;
+        ArrayList<String> roomList;
         int oldSize = 0;
+        boolean continua = true;
         
-        while(true){     
+        while(continua){     
             try {
                 
-                lista = server.getRooms();
+                roomList = server.getRooms();
                 
-                if(oldSize != lista.size()){
-                    if(oldSize > lista.size()){
+                if(oldSize != roomList.size()){
+                    if(oldSize > roomList.size()){
                         for(int i = 0; i < oldSize; i++)
-                            if(!lista.containsKey(list.get(i))){
+                            if(!roomList.contains(list.get(i))){
                                 list.removeElement(list.get(i));
                                 break;
                             }  
                     }else{
-                        for(Map.Entry m : lista.entrySet()){
-                            if(!list.contains(m.getKey()))
-                                list.addElement((String) m.getKey());
-                        }                        
+                        for (String room : roomList) {
+                            if(!list.contains(room))
+                                list.addElement(room);
+                        }                      
                     }                                            
-                    oldSize = lista.size();
+                    oldSize = roomList.size();
                 }
                 
             } catch (RemoteException ex) {
+                continua = false;
                 System.out.println("Erro " + ex);
             }
             

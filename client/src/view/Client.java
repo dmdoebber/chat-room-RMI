@@ -15,6 +15,7 @@ import java.rmi.registry.Registry;
  *
  * @author daniel
  */
+
 public class Client{
     private Registry registry;
     private IServerChat server;
@@ -23,13 +24,13 @@ public class Client{
     private String IP;
     
     public Client(){
-        this.IP = "127.0.0.1";               
+        this.IP = "127.0.0.1"; //trocar pra testar na apresentação do trabalho              
         try{                        
             registry = LocateRegistry.getRegistry(IP, 2020);
             server = (IServerChat) registry.lookup("Servidor");
             
-            vList = new viewList(server);
-            vList.setVisible(true);   
+            vList = new viewList(server, registry);
+            vList.setVisible(true);
         }catch(RemoteException | NotBoundException e){
             System.out.println("Erro " + e);
         }

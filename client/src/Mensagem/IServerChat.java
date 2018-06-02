@@ -6,13 +6,13 @@
 package Mensagem;
 
 import java.rmi.RemoteException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  *
  * @author daniel
  */
 public interface IServerChat extends java.rmi.Remote {
-    public HashMap<String, IRoomChat> getRooms() throws RemoteException;
+    public ArrayList<String> getRooms() throws RemoteException;
     public void createRoom(String roomName) throws RemoteException;
 }
