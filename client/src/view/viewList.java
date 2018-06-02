@@ -12,6 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -33,6 +34,9 @@ public class viewList extends javax.swing.JFrame {
 
         list = new DefaultListModel<>();
         listaSalas.setModel(list);
+        
+        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         attSalas = new atualizaSalas(list, server);
         attSalas.start();  //dangerous disse o java
