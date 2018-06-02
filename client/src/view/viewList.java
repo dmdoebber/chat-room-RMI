@@ -35,7 +35,6 @@ public class viewList extends javax.swing.JFrame {
         list = new DefaultListModel<>();
         listaSalas.setModel(list);
         
-        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         attSalas = new atualizaSalas(list, server);
