@@ -6,6 +6,7 @@
 package view;
 
 import Mensagem.IRoomChat;
+import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 import javax.swing.JFrame;
 
@@ -63,6 +64,12 @@ public class sala extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        txt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtKeyPressed(evt);
             }
         });
 
@@ -157,6 +164,20 @@ public class sala extends javax.swing.JFrame {
         vList.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtKeyPressed
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            String texto = txt.getText();
+            try {
+                roomChat.sendMsg(userName, texto);
+            } catch (RemoteException ex) {
+                System.out.println("Erro " + ex);
+            }
+            txt.setText("");  
+        }
+        
+    }//GEN-LAST:event_txtKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
